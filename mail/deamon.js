@@ -43,7 +43,7 @@ function mailDeamon() {
       .catch(err => {
         log.error(err.message);
       });
-  }, 10000);
+  }, 100000);
 }
 
 module.exports = mailDeamon;
