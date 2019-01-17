@@ -1,10 +1,58 @@
 {
 	"info": {
 		"_postman_id": "32d8f79e-2e61-4917-8798-ddcb40b617c7",
-		"name": "our-pool-table",
+		"name": "our-pool-club",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Clear All - Init",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "077829b8-9e86-44a6-a169-a0640bf6f654",
+						"exec": [
+							"pm.test(\"Body includes string ERROR\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5080/api/v1/admin/clearall",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5080",
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"clearall"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "ROOT",
 			"event": [
@@ -161,286 +209,7 @@
 			"response": []
 		},
 		{
-			"name": "API V1 CLUBS",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
-						"exec": [
-							"pm.test(\"Response time is less than 200ms\", function () {",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);",
-							"});",
-							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:5080/api/v1/clubs",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5080",
-					"path": [
-						"api",
-						"v1",
-						"clubs"
-					]
-				},
-				"description": "Should return all listed clubs"
-			},
-			"response": []
-		},
-		{
-			"name": "API V1 CLUBS - with id",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
-						"exec": [
-							"pm.test(\"Response time is less than 200ms\", function () {",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);",
-							"});",
-							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:5080/api/v1/clubs/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5080",
-					"path": [
-						"api",
-						"v1",
-						"clubs",
-						"1"
-					]
-				},
-				"description": "Should return all listed clubs"
-			},
-			"response": []
-		},
-		{
-			"name": "API V1 CLUBS NEW - good random",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
-						"exec": [
-							"pm.test(\"Response time is less than 200ms\", function () {",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);",
-							"});",
-							"",
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"c_name\": \"Cool Club {{$randomInt}}\",\n\t\"c_description\": \"some massiv description text\",\n\t\"c_iniator\": \"1\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost:5080/api/v1/clubs",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5080",
-					"path": [
-						"api",
-						"v1",
-						"clubs"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "API V1 CLUBS NEW - bad1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
-						"exec": [
-							"pm.test(\"Response time is less than 200ms\", function () {",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);",
-							"});",
-							"",
-							"pm.test(\"Status code is 406\", function () {",
-							"    pm.response.to.have.status(406);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"c_name\": \"Cool Club {{$randomInt}}\",\n\t\"c_description\": \"some massiv description text\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost:5080/api/v1/clubs",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5080",
-					"path": [
-						"api",
-						"v1",
-						"clubs"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "API V1 USERS",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
-						"exec": [
-							"pm.test(\"Response time is less than 200ms\", function () {",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);",
-							"});",
-							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:5080/api/v1/users",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5080",
-					"path": [
-						"api",
-						"v1",
-						"users"
-					]
-				},
-				"description": "Should return all listed clubs"
-			},
-			"response": []
-		},
-		{
-			"name": "API V1 USERS - with id",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
-						"exec": [
-							"pm.test(\"Response time is less than 200ms\", function () {",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);",
-							"});",
-							"",
-							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:5080/api/v1/users/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5080",
-					"path": [
-						"api",
-						"v1",
-						"users",
-						"1"
-					]
-				},
-				"description": "Should return all listed clubs"
-			},
-			"response": []
-		},
-		{
-			"name": "API V1 USERS NEW - good random",
+			"name": "API V1 Add first User",
 			"event": [
 				{
 					"listen": "test",
@@ -471,7 +240,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"u_name\": \"testuser{{$randomInt}}\",\n\t\"u_mail\": \"testuser{{$randomInt}}@test.com\",\n\t\"u_password\": \"qwertz123\"\n}"
+					"raw": "{\n\t\"u_name\": \"schwiddi\",\n\t\"u_mail\": \"schwiddi@me.com\",\n\t\"u_password\": \"qwertz123\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5080/api/v1/users",
@@ -490,7 +259,57 @@
 			"response": []
 		},
 		{
-			"name": "API V1 USERS NEW - bad1",
+			"name": "API V1 Add second user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"u_name\": \"r21billard\",\n\t\"u_mail\": \"r21billard@gmail.com\",\n\t\"u_password\": \"qwertz123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5080/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API V1 Add bad User (Joi Val Test)",
 			"event": [
 				{
 					"listen": "test",
@@ -549,7 +368,205 @@
 			"response": []
 		},
 		{
-			"name": "API V1 LOGIN OK",
+			"name": "API V1 Get User by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5080/api/v1/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"1"
+					]
+				},
+				"description": "Should return all listed clubs"
+			},
+			"response": []
+		},
+		{
+			"name": "API V1 then get all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5080/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				},
+				"description": "Should return all listed clubs"
+			},
+			"response": []
+		},
+		{
+			"name": "API V1 do a bad login 1 (wrong mail)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bbec5991-85ff-4c9b-87cd-077530303a04",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Body includes string is required\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Bad\");",
+							"});",
+							"",
+							"pm.test(\"Status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"mail\": \"testuser6891111@test.com\",\n\t\"password\": \"qwertz123\"\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5080/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5080",
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API V1 do a bad login 2 (wrong password / bcrypt and db)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a5686853-173e-4c4f-846b-b239e529d438",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Body includes string is required\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Bad\");",
+							"});",
+							"",
+							"pm.test(\"Status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"mail\": \"testuser689@test.com\",\n\t\"password\": \"qwertz12312345\"\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5080/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5080",
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "do a good logn with user 1",
 			"event": [
 				{
 					"listen": "test",
@@ -612,23 +629,19 @@
 			"response": []
 		},
 		{
-			"name": "API V1 LOGIN BAD",
+			"name": "API V1 Add new Club",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "bbec5991-85ff-4c9b-87cd-077530303a04",
+						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
 						"exec": [
 							"pm.test(\"Response time is less than 200ms\", function () {",
 							"    pm.expect(pm.response.responseTime).to.be.below(200);",
 							"});",
 							"",
-							"pm.test(\"Body includes string is required\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Bad\");",
-							"});",
-							"",
-							"pm.test(\"Status code\", function () {",
-							"    pm.response.to.have.status(400);",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -647,10 +660,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"mail\": \"testuser6891111@test.com\",\n\t\"password\": \"qwertz123\"\n\t\n}"
+					"raw": "{\n\t\"c_name\": \"randweg 21\",\n\t\"c_description\": \"dr geilscht club uf däre erde\",\n\t\"c_iniator\": \"1\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5080/api/v1/login",
+					"raw": "http://localhost:5080/api/v1/clubs",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -659,30 +672,26 @@
 					"path": [
 						"api",
 						"v1",
-						"login"
+						"clubs"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "API V1 LOGIN BAD 2",
+			"name": "API V1 Add second club",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "a5686853-173e-4c4f-846b-b239e529d438",
+						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
 						"exec": [
 							"pm.test(\"Response time is less than 200ms\", function () {",
 							"    pm.expect(pm.response.responseTime).to.be.below(200);",
 							"});",
 							"",
-							"pm.test(\"Body includes string is required\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Bad\");",
-							"});",
-							"",
-							"pm.test(\"Status code\", function () {",
-							"    pm.response.to.have.status(400);",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -701,10 +710,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"mail\": \"testuser689@test.com\",\n\t\"password\": \"qwertz12312345\"\n\t\n}"
+					"raw": "{\n\t\"c_name\": \"randweg 22\",\n\t\"c_description\": \"dr geilscht club uf däre erde 2\",\n\t\"c_iniator\": \"1\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5080/api/v1/login",
+					"raw": "http://localhost:5080/api/v1/clubs",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -713,9 +722,148 @@
 					"path": [
 						"api",
 						"v1",
-						"login"
+						"clubs"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "API V1 add bad club (joi)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 406\", function () {",
+							"    pm.response.to.have.status(406);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"c_name\": \"Cool Club {{$randomInt}}\",\n\t\"c_description\": \"some massiv description text\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5080/api/v1/clubs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5080",
+					"path": [
+						"api",
+						"v1",
+						"clubs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API V1 Get Club by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5080/api/v1/clubs/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5080",
+					"path": [
+						"api",
+						"v1",
+						"clubs",
+						"1"
+					]
+				},
+				"description": "Should return all listed clubs"
+			},
+			"response": []
+		},
+		{
+			"name": "API V1 then get all clubs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5080/api/v1/clubs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5080",
+					"path": [
+						"api",
+						"v1",
+						"clubs"
+					]
+				},
+				"description": "Should return all listed clubs"
 			},
 			"response": []
 		}
