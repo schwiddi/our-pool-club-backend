@@ -15,8 +15,7 @@ function sendRegisterMail(user) {
 }
 
 function mailDeamon() {
-  log.info('mailDeamon: function called');
-  setTimeout(() => {
+  setInterval(() => {
     db.getConnection()
       .then(conn => {
         const result = conn.query('SELECT u_id, u_mail FROM t_users WHERE u_active = 0');
@@ -44,7 +43,7 @@ function mailDeamon() {
       .catch(err => {
         log.error(err.message);
       });
-  }, 1000);
+  }, 10000);
 }
 
 module.exports = mailDeamon;
