@@ -47,17 +47,6 @@ const schemas = {
       .max(255)
       .required(),
   },
-  zweilogin: {
-    mail: Joi.string()
-      .email({ minDomainAtoms: 2, })
-      .min(3)
-      .max(255)
-      .required(),
-    password: Joi.string()
-      .min(3)
-      .max(255)
-      .required(),
-  },
 };
 
 module.exports = {
