@@ -1,8 +1,9 @@
 {
   "author": "schwiddi",
-  "name": "our-pool-table-backend",
+  "name": "our-pool-club-backend",
   "version": "0.1.0",
   "description": "backend to store games that had been played on your pool table",
+  "private": true,
   "main": "index.js",
   "dependencies": {
     "@godaddy/terminus": "^4.1.0",
