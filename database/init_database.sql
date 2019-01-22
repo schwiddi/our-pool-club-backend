@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `ourpooltable` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `ourpooltable`;
 -- MySQL dump 10.13  Distrib 8.0.12, for macos10.13 (x86_64)
 --
 -- Host: 127.0.0.1    Database: ourpooltable
@@ -18,35 +16,84 @@ USE `ourpooltable`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `t_club`
+-- Table structure for table `inf_req_log`
 --
 
-DROP TABLE IF EXISTS `t_club`;
+DROP TABLE IF EXISTS `inf_req_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `t_club` (
-  `c_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `c_title` varchar(45) NOT NULL,
-  `c_media` blob,
-  `c_description` varchar(45) DEFAULT NULL,
-  `c_country` varchar(45) DEFAULT NULL,
-  `c_contact_mail` varchar(45) NOT NULL,
-  `c_ts_insert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `c_ts_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`c_id`),
-  UNIQUE KEY `c_title_UNIQUE` (`c_title`),
-  UNIQUE KEY `c_id_UNIQUE` (`c_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `inf_req_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `req` varchar(1000) NOT NULL,
+  `req_ts` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `t_rel_club_table`
+-- Table structure for table `t_clubs`
 --
 
-DROP TABLE IF EXISTS `t_rel_club_table`;
+DROP TABLE IF EXISTS `t_clubs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `t_rel_club_table` (
+CREATE TABLE `t_clubs` (
+  `c_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `c_name` varchar(45) NOT NULL,
+  `c_description` varchar(45) DEFAULT NULL,
+  `c_initiator` int(11) NOT NULL,
+  `c_ts_insert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `c_ts_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`c_id`),
+  UNIQUE KEY `c_id_UNIQUE` (`c_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `t_notification_messages`
+--
+
+DROP TABLE IF EXISTS `t_notification_messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `t_notification_messages` (
+  `n_m_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `n_m_userid` int(11) NOT NULL,
+  `n_m_nid` int(11) NOT NULL,
+  `n_m_sended` int(1) NOT NULL DEFAULT '0',
+  `n_m_ts_insert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `n_m_ts_update` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`n_m_id`),
+  UNIQUE KEY `n_m_id_UNIQUE` (`n_m_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `t_notification_types`
+--
+
+DROP TABLE IF EXISTS `t_notification_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `t_notification_types` (
+  `n_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `n_disc` varchar(255) NOT NULL,
+  `n_discShort` varchar(45) NOT NULL,
+  PRIMARY KEY (`n_id`),
+  UNIQUE KEY `n_id_UNIQUE` (`n_id`),
+  UNIQUE KEY `n_discShort_UNIQUE` (`n_discShort`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `t_rel_club_tables`
+--
+
+DROP TABLE IF EXISTS `t_rel_club_tables`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `t_rel_club_tables` (
   `rel_id` int(11) unsigned NOT NULL,
   `rel_club_id` int(11) NOT NULL,
   `rel_table_id` int(11) NOT NULL,
@@ -58,13 +105,13 @@ CREATE TABLE `t_rel_club_table` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `t_rel_user_club`
+-- Table structure for table `t_rel_user_clubs`
 --
 
-DROP TABLE IF EXISTS `t_rel_user_club`;
+DROP TABLE IF EXISTS `t_rel_user_clubs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `t_rel_user_club` (
+CREATE TABLE `t_rel_user_clubs` (
   `rel_id` int(11) unsigned NOT NULL,
   `rel_user_id` int(11) NOT NULL,
   `rel_club_id` int(11) NOT NULL,
@@ -76,14 +123,15 @@ CREATE TABLE `t_rel_user_club` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `t_table`
+-- Table structure for table `t_tables`
 --
 
-DROP TABLE IF EXISTS `t_table`;
+DROP TABLE IF EXISTS `t_tables`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `t_table` (
+CREATE TABLE `t_tables` (
   `t_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `t_c_id` int(11) NOT NULL,
   `t_name` varchar(45) NOT NULL,
   `t_ts_insert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `t_ts_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -93,23 +141,26 @@ CREATE TABLE `t_table` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `t_user`
+-- Table structure for table `t_users`
 --
 
-DROP TABLE IF EXISTS `t_user`;
+DROP TABLE IF EXISTS `t_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `t_user` (
+CREATE TABLE `t_users` (
   `u_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `u_nickname` varchar(45) NOT NULL,
-  `u_contact_mail` varchar(45) NOT NULL,
+  `u_name` varchar(45) NOT NULL,
+  `u_password` varchar(100) NOT NULL,
+  `u_mail` varchar(45) NOT NULL,
   `u_ts_insert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `u_ts_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `u_active` int(1) DEFAULT '0',
+  `u_registration_key` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`u_id`),
   UNIQUE KEY `u_id_UNIQUE` (`u_id`),
-  UNIQUE KEY `u_nickname_UNIQUE` (`u_nickname`),
-  UNIQUE KEY `u_contact_mail_UNIQUE` (`u_contact_mail`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `u_nickname_UNIQUE` (`u_name`),
+  UNIQUE KEY `u_contact_mail_UNIQUE` (`u_mail`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,4 +176,4 @@ CREATE TABLE `t_user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-20 23:30:23
+-- Dump completed on 2019-01-22 13:23:41
