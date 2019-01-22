@@ -1,7 +1,7 @@
-function returnRegisterMail(mail) {
+function returnRegisterMail(receiver) {
   return {
     from: 'r21billard@gmail.com',
-    to: mail,
+    to: receiver,
     subject: 'this is the register mail',
     text: 'That was easy!',
   };
