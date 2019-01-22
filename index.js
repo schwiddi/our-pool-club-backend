@@ -11,6 +11,7 @@ const reqLogger = require('./common/reqLogger');
 const db = require('./db/db_connection');
 const api = require('./api/index');
 const mailDeamon = require('./mail/deamon');
+const writeNotifications = require('./notification/notification');
 
 log.info(`NODE_ENV: ${process.env.NODE_ENV}`);
 log.info(`LogLevel: ${log.getLevel()}`);
@@ -82,6 +83,7 @@ try {
     log.info(`Server is up and running on ${httpPort}`);
   });
   mailDeamon();
+  writeNotifications();
 } catch (error) {
   log.error(error);
 }
