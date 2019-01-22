@@ -20,7 +20,7 @@ login.post('/', (req, res) => {
         .then((dbres) => {
           if (isEmpty(dbres[0])) {
             res.sendStatus(400);
-            log.error('no password found for given user... suspect...');
+            log.error('no user found for given mail... suspect...');
           } else {
             bcrypt.compare(req.body.password, dbres[0][0].u_password)
               .then(compRes => {
