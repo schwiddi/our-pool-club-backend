@@ -1,75 +1,36 @@
+const isEmpty = require('lodash/isEmpty');
 const db = require('../db/db_connection');
 const log = require('../common/logger');
 
 function notificationWriter() {
-  db.getConnection()
-    .then(conn => {
-      var allNotifications = conn.query('SELECT * FROM t_notification_types;');
-      conn.release();
-      return allNotifications;
-    })
-    .then((allNotifications) => {
-      db.getConnection()
-        .then(conn => {
-          var allUsers = conn.query('SELECT * FROM t_users;');
-          conn.release();
-          return allUsers, allNotifications;
-        })
-        .then((allUsers, allNotifications) => {
-          console.log(allUsers[0]);
-          console.log(allNotifications[0]);
-        })
-        .catch(err => {
-          log.error(err.message);
-          return false;
+  setInterval(() => {
+    let users, types;
+    db.query('SELECT * FROM t_users;')
+      .then(rows => {
+        users = rows;
+        return db.query('SELECT * FROM t_notification_types;');
+      })
+      .then(rows => {
+        types = rows;
+        return;
+      })
+      .then(() => {
+        users[0].forEach(function (user) {
+          types[0].forEach(function (type) {
+            db.query(`SELECT * FROM t_notification_messages WHERE n_m_userid = ${user.u_id} AND n_m_nid = ${type.n_id};`)
+              .then(rows => {
+                if (isEmpty(rows[0])) {
+                  db.query(`INSERT INTO t_notification_messages (n_m_userid, n_m_nid) VALUES (${user.u_id}, ${type.n_id});`)
+                    .then(() => {
+                      log.info(`Inserted new notification ${type.n_id} for user ${user.u_id}`);
+                    });
+                }
+                return;
+              });
+          });
         });
-    })
-    .catch(err => {
-      log.error(err.message);
-      return false;
-    });
-}
-
-function getAllUsers() {
-  db.getConnection()
-    .then(conn => {
-      const result = conn.query('SELECT * FROM t_users;');
-      conn.release();
-      log.info('notification: getAllUsers called');
-      return result;
-    })
-    .catch(err => {
-      log.error(err.message);
-      return false;
-    });
-}
-
-function getAllNotifications() {
-  db.getConnection()
-    .then(conn => {
-      const result = conn.query('SELECT * FROM t_notification_types;');
-      conn.release();
-      log.info('notification: getAllPossibleNotifications called');
-      return result;
-    })
-    .catch(err => {
-      log.error(err.message);
-      return false;
-    });
-}
-
-function getAllWritenNotificationForOneUser(userId) {
-  db.getConnection()
-    .then(conn => {
-      const result = conn.query(`SELECT * FROM t_notification_messages WHERE n_m_userid = ${userId};`);
-      conn.release();
-      log.info(`notification: getAllWritenNotificationForOneUser ${userId} called`);
-      return result;
-    })
-    .catch(err => {
-      log.error(err.message);
-      return false;
-    });
+      });
+  }, 10000);
 }
 
 module.exports = notificationWriter;
