@@ -9,6 +9,7 @@ admin.get('/clearall', (req, res) => {
       .then(conn => {
         conn.query('TRUNCATE inf_req_log;');
         conn.query('TRUNCATE t_clubs;');
+        conn.query('TRUNCATE t_notification_messages;');
         conn.query('TRUNCATE t_rel_club_tables;');
         conn.query('TRUNCATE t_rel_user_clubs;');
         conn.query('TRUNCATE t_tables;');
