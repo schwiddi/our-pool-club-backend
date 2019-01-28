@@ -1,4 +1,4 @@
-function returnRegisterMail(receiver) {
+function completeRegistration(receiver) {
   return {
     from: 'r21billard@gmail.com',
     to: receiver,
@@ -7,4 +7,4 @@ function returnRegisterMail(receiver) {
   };
 }
 
-module.exports = { returnRegisterMail, };
+module.exports = { completeRegistration, };

@@ -15,6 +15,6 @@ const smtpConfig = {
 };
 
 // create transport middleware with smtpconfig
-var mailTransporter = nodemailer.createTransport(smtpConfig);
+var mailerSender = nodemailer.createTransport(smtpConfig);
 
-module.exports = mailTransporter;
+module.exports = mailerSender;

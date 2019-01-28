@@ -2,7 +2,7 @@ const isEmpty = require('lodash/isEmpty');
 const db = require('../db/db_connection');
 const log = require('../common/logger');
 
-function notificationWriter() {
+function notificationGenerator() {
   setInterval(() => {
     let users, types;
     db.query('SELECT * FROM t_users;')
@@ -33,4 +33,4 @@ function notificationWriter() {
   }, 10000);
 }
 
-module.exports = notificationWriter;
+module.exports = notificationGenerator;

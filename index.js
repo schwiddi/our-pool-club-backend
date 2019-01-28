@@ -10,8 +10,9 @@ const log = require('./common/logger');
 const reqLogger = require('./common/reqLogger');
 const db = require('./db/db_connection');
 const api = require('./api/index');
-const mailDeamon = require('./mail/deamon');
-const writeNotifications = require('./notification/notification');
+// const mailDeamon = require('./mail/deamon');
+const notificationGenerator = require('./notifications/notificationGenerator');
+const notificationSender = require('./notifications/notificationSender');
 
 log.info(`NODE_ENV: ${process.env.NODE_ENV}`);
 log.info(`LogLevel: ${log.getLevel()}`);
@@ -82,8 +83,9 @@ try {
   server.listen(httpPort, () => {
     log.info(`Server is up and running on ${httpPort}`);
   });
-  mailDeamon();
-  writeNotifications();
+  // mailDeamon();
+  notificationGenerator();
+  notificationSender();
 } catch (error) {
   log.error(error);
 }
