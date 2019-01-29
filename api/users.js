@@ -6,6 +6,7 @@ const log = require('../common/logger');
 const db = require('../db/db_connection');
 const { new_user, } = require('../schemas/joiInVal');
 const users = express.Router();
+const md5 = require('md5');
 
 function validateNewUser(data) {
   return Joi.validate(data, new_user);
@@ -57,11 +58,12 @@ users.post('/', (req, res) => {
   if (tmp.error) {
     res.status(406).send(`${tmp.error.name}: ${tmp.error.details[0].message} `);
   } else {
+    const registerKey = md5(req.body.u_mail);
     bcrypt.hash(req.body.u_password, 10)
       .then(hashedpw => {
         db.getConnection()
           .then(conn => {
-            const result = conn.query(`INSERT INTO t_users (u_name, u_mail, u_password) VALUES('${req.body.u_name}', '${req.body.u_mail}', '${hashedpw}');`);
+            const result = conn.query(`INSERT INTO t_users (u_name, u_mail, u_password, u_registration_key) VALUES('${req.body.u_name}', '${req.body.u_mail}', '${hashedpw}', '${registerKey}');`);
             conn.release();
             return result;
           })

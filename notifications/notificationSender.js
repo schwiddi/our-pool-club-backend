@@ -13,14 +13,16 @@ function notificationSender() {
       })
       .then(() => {
         openNotifications.forEach(function (openNotification) {
-          db.query(`SELECT u_mail FROM t_users WHERE u_id = ${openNotification.n_m_userid};`)
+          db.query(`SELECT u_mail, u_name, u_registration_key FROM t_users WHERE u_id = ${openNotification.n_m_userid};`)
             .then(rows => {
               let userMail = rows[0][0].u_mail;
+              let userName = rows[0][0].u_name;
+              let userRegKey = rows[0][0].u_registration_key;
               db.query(`SELECT n_disc FROM t_notification_types WHERE n_id = ${openNotification.n_m_nid};`)
                 .then(rows => {
                   let notificationType = rows[0][0].n_disc;
                   if (notificationType === 'completeRegistration') {
-                    let tmp = completeRegistration(userMail);
+                    let tmp = completeRegistration(userMail, userName, userRegKey);
                     mailer.sendMail(tmp, function (error, info) {
                       if (error) {
                         log.error(error);
