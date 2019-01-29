@@ -10,7 +10,6 @@ const log = require('./common/logger');
 const reqLogger = require('./common/reqLogger');
 const db = require('./db/db_connection');
 const api = require('./api/index');
-// const mailDeamon = require('./mail/deamon');
 const notificationGenerator = require('./notifications/notificationGenerator');
 const notificationSender = require('./notifications/notificationSender');
 
@@ -43,7 +42,7 @@ function onShutdown() {
 }
 
 function healthCheck() {
-  log.info('healCheck called');
+  log.info('healthcheck called');
   return Promise.resolve('Success');
 }
 
@@ -83,7 +82,6 @@ try {
   server.listen(httpPort, () => {
     log.info(`Server is up and running on ${httpPort}`);
   });
-  // mailDeamon();
   notificationGenerator();
   notificationSender();
 } catch (error) {
