@@ -54,56 +54,6 @@
 			"response": []
 		},
 		{
-			"name": "ROOT",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
-						"exec": [
-							"pm.test(\"Body includes string ERROR\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Error\");",
-							"});",
-							"",
-							"pm.test(\"Body includes string Cannot GET /\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Cannot GET /\");",
-							"});",
-							"",
-							"pm.test(\"Response time is less than 200ms\", function () {",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);",
-							"});",
-							"",
-							"pm.test(\"Status code is 404\", function () {",
-							"    pm.response.to.have.status(404);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:5080/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5080",
-					"path": [
-						""
-					]
-				},
-				"description": "Root from the Node Backend this should not return anything so far"
-			},
-			"response": []
-		},
-		{
 			"name": "HEALTH",
 			"event": [
 				{
@@ -170,7 +120,7 @@
 						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
 						"exec": [
 							"pm.test(\"Body is correct\", function () {",
-							"    pm.response.to.have.body(\"Hello!\");",
+							"    pm.response.to.have.body({\"response\":\"Hello!!!!\"});",
 							"});",
 							"",
 							"pm.test(\"Response time is less than 200ms\", function () {",
@@ -547,7 +497,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"mail\": \"testuser689@test.com\",\n\t\"password\": \"qwertz12312345\"\n\t\n}"
+					"raw": "{\n\t\"mail\": \"r21billard@gmail.com\",\n\t\"password\": \"falschesPw\"\n\t\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5080/api/v1/login",
