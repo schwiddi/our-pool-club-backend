@@ -5,16 +5,24 @@ const admin = express.Router();
 
 admin.get('/clearall', (req, res) => {
   if (process.env.NODE_ENV === 'dev') {
-    db.getConnection()
-      .then(conn => {
-        conn.query('TRUNCATE inf_req_log;');
-        conn.query('TRUNCATE t_clubs;');
-        conn.query('TRUNCATE t_notification_messages;');
-        conn.query('TRUNCATE t_rel_club_tables;');
-        conn.query('TRUNCATE t_rel_user_clubs;');
-        conn.query('TRUNCATE t_tables;');
-        conn.query('TRUNCATE t_users;');
-        conn.release();
+    db.query('TRUNCATE inf_req_log;')
+      .then(() => {
+        return db.query('TRUNCATE t_clubs;');
+      })
+      .then(() => {
+        return db.query('TRUNCATE t_notification_messages;');
+      })
+      .then(() => {
+        return db.query('TRUNCATE t_rel_club_tables;');
+      })
+      .then(() => {
+        return db.query('TRUNCATE t_rel_user_clubs;');
+      })
+      .then(() => {
+        return db.query('TRUNCATE t_tables;');
+      })
+      .then(() => {
+        return db.query('TRUNCATE t_users;');
       })
       .then(() => {
         log.warn('truncated all tables...');
