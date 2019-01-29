@@ -11,42 +11,37 @@ const login = express.Router();
 login.post('/', (req, res) => {
   Joi.validate(req.body, new_login)
     .then(() => {
-      db.getConnection()
-        .then(conn => {
-          const dbres = conn.query(`SELECT * FROM t_users WHERE u_mail = '${req.body.mail}';`);
-          conn.release();
-          return dbres;
-        })
-        .then((dbres) => {
-          if (isEmpty(dbres[0])) {
+      db.query(`SELECT * FROM t_users WHERE u_mail = '${req.body.mail}';`)
+        .then(rows => {
+          if (isEmpty(rows[0])) {
             res.sendStatus(400);
-            log.error('no user found for given mail... suspect...');
+            log.warn(`login with unknown mail! ${req.body.mail}`);
           } else {
-            bcrypt.compare(req.body.password, dbres[0][0].u_password)
+            bcrypt.compare(req.body.password, rows[0][0].u_password)
               .then(compRes => {
                 if (compRes) {
                   const jwtToken = jwt.sign(
                     {
-                      u_id: dbres[0][0].u_id,
-                      u_name: dbres[0][0].u_name,
-                      u_mail: dbres[0][0].u_mail,
-                      u_ts_insert: dbres[0][0].u_ts_insert,
-                      u_ts_update: dbres[0][0].u_ts_update,
+                      u_id: rows[0][0].u_id,
+                      u_name: rows[0][0].u_name,
+                      u_mail: rows[0][0].u_mail,
+                      u_ts_insert: rows[0][0].u_ts_insert,
                     },
                     process.env.BACKEND_JWT_KEY,
                     {
                       expiresIn: process.env.BACKEND_JWT_EXPIRE,
                     }
                   );
-                  log.info(`token generated: ${jwtToken}`);
                   res
                     .status(200)
                     .header('x-auth-token', jwtToken)
                     .header('access-control-expose-headers', 'x-auth-token')
                     .send('OK');
+
+                  log.info(`user ${req.body.mail} successfull auth and new token generated ${jwtToken}`);
                 } else {
                   res.sendStatus(400);
-                  log.error('bcrypt compare was false... supsect...');
+                  log.warn(`login with wrong password!! ${req.body.mail} and pw: ${req.body.password}`);
                 }
               })
               .catch(err => {
@@ -61,8 +56,8 @@ login.post('/', (req, res) => {
         });
     })
     .catch(err => {
-      res.status(400).send(err.details[0].message);
-      log.error(`login validation: ${err.message}`);
+      res.sendStatus(400);
+      log.warn(`login validation had a problem!!! ${err.message}`);
     });
 });
 
