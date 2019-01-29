@@ -23,12 +23,21 @@ function notificationGenerator() {
                   db.query(`INSERT INTO t_notification_messages (n_m_userid, n_m_nid) VALUES (${user.u_id}, ${type.n_id});`)
                     .then(() => {
                       log.info(`notificationGenerator: Inserted new notification ${type.n_id} for user ${user.u_id}`);
+                    })
+                    .catch(err => {
+                      log.error(err.message);
                     });
                 }
                 return;
+              })
+              .catch(err => {
+                log.error(err.message);
               });
           });
         });
+      })
+      .catch(err => {
+        log.error(err.message);
       });
   }, 30000);
 }
