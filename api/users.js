@@ -58,7 +58,7 @@ users.post('/', (req, res) => {
   if (tmp.error) {
     res.status(406).send(`${tmp.error.name}: ${tmp.error.details[0].message} `);
   } else {
-    const registerKey = md5(`${req.body.u_mail}${req.body.u_name}`);
+    const registerKey = md5(`${req.body.u_mail}${req.body.u_name}${new Date()}`);
     bcrypt.hash(req.body.u_password, 10)
       .then(hashedpw => {
         db.getConnection()
