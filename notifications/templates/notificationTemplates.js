@@ -1,22 +1,19 @@
 function completeRegistration(receiver, username, regkey) {
   return {
-    from: 'r21billard@gmail.com',
+    from: '"Pool Club" <r21billard@gmail.com>',
     to: receiver,
     subject: 'Welcome & Complete Registration',
-    text:
-      `
-      Hi ${username},
-
-      this here is the activation mail for your account that you've just created.
-
-      Please use the following Link the complete the Registration process.
-
-      Link: ${regkey}
-
-      Cheers
-      your Pool Club Team
-      `
-    ,
+    text: `Activate Account Link: http://${process.env.BACKEND_DB_HOST}:${process.env.BACKEND_HTTP_PORT}/api/v1/users/completeRegistration/${regkey}`,
+    html: `
+      <h3>Hi ${username},</h3>
+      <p>this here is the activation mail for your account that you've just created.</p>
+      <p></p>
+      <p>Please use the following Link to complete the registration Process.</p>
+      <p></p>
+      <p>Link: http://${process.env.BACKEND_DB_HOST}:${process.env.BACKEND_HTTP_PORT}/api/v1/users/completeRegistration/${regkey}</p>
+      <p></p>
+      <p>Cheers</p>
+      <p>your Pool Club Team</p>`,
   };
 }
 
