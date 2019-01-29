@@ -6,7 +6,9 @@ const login = require('./login');
 const admin = require('./admin');
 const api = express.Router();
 
-const defaultRes = 'Hello!';
+const defaultRes = {
+  'response': 'Hello!!!!',
+};
 
 api.use('/clubs/', clubs);
 api.use('/users/', users);
