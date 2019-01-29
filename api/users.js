@@ -108,7 +108,7 @@ users.get('/completeRegistration/:regKey', (req, res) => {
         db.query(`UPDATE t_users SET u_active = '1' WHERE (u_id = '${rows[0][0].u_id}');`)
           .then(() => {
             res.sendStatus(200);
-            log.info(`User activated ${rows[0][0].u_mail}`);
+            log.info(`user activated ${rows[0][0].u_mail}`);
           }).catch(err => {
             res.sendStatus(500);
             log.error(err.message);
