@@ -7,4 +7,13 @@ function completeRegistration(receiver) {
   };
 }
 
-module.exports = { completeRegistration, };
+function someTest(receiver) {
+  return {
+    from: 'r21billard@gmail.com',
+    to: receiver,
+    subject: 'this is the second notification someTest',
+    text: 'someTest',
+  };
+}
+
+module.exports = { completeRegistration, someTest, };
