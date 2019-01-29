@@ -58,7 +58,7 @@ users.post('/', (req, res) => {
   if (tmp.error) {
     res.status(406).send(`${tmp.error.name}: ${tmp.error.details[0].message} `);
   } else {
-    const registerKey = md5(req.body.u_mail);
+    const registerKey = md5(`${req.body.u_mail}${req.body.u_name}`);
     bcrypt.hash(req.body.u_password, 10)
       .then(hashedpw => {
         db.getConnection()
@@ -96,6 +96,29 @@ users.post('/', (req, res) => {
         log.error(err.message);
       });
   }
+});
+
+users.get('/completeRegistration/:regKey', (req, res) => {
+  db.query(`SELECT * FROM t_users WHERE u_registration_key = '${req.params.regKey}' AND u_active = 0;`)
+    .then(rows => {
+      if (isEmpty(rows[0])) {
+        res.sendStatus(400);
+        log.warn('unknown or allready used regKey!!!');
+      } else {
+        db.query(`UPDATE t_users SET u_active = '1' WHERE (u_id = '${rows[0][0].u_id}');`)
+          .then(() => {
+            res.sendStatus(200);
+            log.info(`User activated ${rows[0][0].u_mail}`);
+          }).catch(err => {
+            res.sendStatus(500);
+            log.error(err.message);
+          });
+      }
+    })
+    .catch(err => {
+      res.sendStatus(500);
+      log.error(err.message);
+    });
 });
 
 module.exports = users;
