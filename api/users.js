@@ -43,7 +43,7 @@ users.get('/:u_id', (req, res) => {
       if (isEmpty(result[0])) {
         res.sendStatus(204);
       } else {
-        res.status(200).send(result[0]);
+        res.status(200).send(result[0][0]);
       }
     })
     .catch(err => {
@@ -76,7 +76,7 @@ users.post('/', (req, res) => {
                 if (isEmpty(ret[0])) {
                   res.sendStatus(500);
                 } else {
-                  res.status(201).send(ret[0]);
+                  res.status(201).send(ret[0][0]);
                 }
               })
               .catch(err => {
