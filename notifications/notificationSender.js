@@ -28,6 +28,9 @@ function notificationSender() {
                         db.query(`UPDATE t_notification_messages SET n_m_sended = '1' WHERE (n_m_id = ${openNotification.n_m_id});`)
                           .then(() => {
                             log.info(`notificationSender: Mail sent with messageId: ${info.messageId} type: ${notificationType} and database was updated for id: ${openNotification.n_m_id}`);
+                          })
+                          .catch(err => {
+                            log.error(err.message);
                           });
                       }
                     });
@@ -40,15 +43,27 @@ function notificationSender() {
                         db.query(`UPDATE t_notification_messages SET n_m_sended = '1' WHERE (n_m_id = ${openNotification.n_m_id});`)
                           .then(() => {
                             log.info(`notificationSender: Mail sent with messageId: ${info.messageId} type: ${notificationType} and database was updated for id: ${openNotification.n_m_id}`);
+                          })
+                          .catch(err => {
+                            log.error(err.message);
                           });
                       }
                     });
                   } else {
                     log.error(`notificationSender: no template definded for: ${notificationType}`);
                   }
+                })
+                .catch(err => {
+                  log.error(err.message);
                 });
+            })
+            .catch(err => {
+              log.error(err.message);
             });
         });
+      })
+      .catch(err => {
+        log.error(err.message);
       });
   }, 30000);
 }

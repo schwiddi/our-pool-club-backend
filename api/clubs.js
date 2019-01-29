@@ -13,7 +13,7 @@ function validateNewClub(data) {
 clubs.get('/', (req, res) => {
   db.getConnection()
     .then(conn => {
-      const result = conn.query('SELECT * FROM ourpooltable.t_clubs;');
+      const result = conn.query('SELECT * FROM t_clubs;');
       conn.release();
       return result;
     })
