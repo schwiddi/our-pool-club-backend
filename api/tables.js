@@ -13,7 +13,7 @@ function validateNewTable(data) {
 tables.get('/', (req, res) => {
   db.getConnection()
     .then(conn => {
-      const result = conn.query('SELECT * FROM ourpooltable.t_tables;');
+      const result = conn.query('SELECT * FROM t_tables;');
       conn.release();
       return result;
     })
