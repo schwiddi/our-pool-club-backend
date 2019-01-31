@@ -54,6 +54,7 @@ clubs.post('/', (req, res) => {
           res.sendStatus(500);
         } else {
           res.status(201).send(rows[0][0]);
+          global.io.emit('my_event', rows[0][0]);
         }
       })
       .catch(err => {
