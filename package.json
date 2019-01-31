@@ -18,7 +18,8 @@
     "md5": "^2.2.1",
     "mysql2": "^1.6.4",
     "nodemailer": "^5.1.1",
-    "simple-node-logger": "^0.93.42"
+    "simple-node-logger": "^0.93.42",
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "eslint": "^5.12.0",

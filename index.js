@@ -3,8 +3,8 @@ const http = require('http');
 const express = require('express');
 const cors = require('cors');
 const compression = require('compression');
-const WebSocket = require('ws');
 const { createTerminus, } = require('@godaddy/terminus');
+const socket = require('socket.io');
 const { httpPort, } = require('./common/port');
 const log = require('./common/logger');
 const reqLogger = require('./common/reqLogger');
@@ -56,26 +56,7 @@ const options = {
 };
 
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ noServer: true, });
-
-wss.on('connection', (ws) => {
-  log.info('got new websocket connection');
-  ws.send('hellou you');
-  ws.on('message', data => {
-    log.info(`ws message: ${data}`);
-    ws.send('thank you');
-  });
-  ws.on('close', () => {
-    log.info('ws closed :(');
-  });
-});
-
-server.on('upgrade', function upgrade(request, socket, head) {
-  wss.handleUpgrade(request, socket, head, function done(ws) {
-    log.info('upgraded to what ever');
-    wss.emit('connection', ws, request);
-  });
-});
+const ws = socket(server);
 
 try {
   createTerminus(server, options);
@@ -87,3 +68,16 @@ try {
 } catch (error) {
   log.error(error);
 }
+
+ws.on('connection', function (socket) {
+  log.info(`socket: new client ${socket.id}`);
+
+  socket.on('my_event', (arg1, arg2) => {
+    log.info(`socket: new message from client ${socket.id} -> ${arg1} -> ${arg2}`);
+    ws.emit('my_event', 'Hi there!');
+  });
+
+  socket.on('disconnect', function () {
+    log.info('socket: connection closed');
+  });
+});
