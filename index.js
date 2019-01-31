@@ -1,10 +1,13 @@
 require('dotenv').config();
-const http = require('http');
 const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
 const cors = require('cors');
 const compression = require('compression');
-const WebSocket = require('ws');
 const { createTerminus, } = require('@godaddy/terminus');
+const socketIO = require('socket.io');
+global.io = socketIO(server);
 const { httpPort, } = require('./common/port');
 const log = require('./common/logger');
 const reqLogger = require('./common/reqLogger');
@@ -16,7 +19,6 @@ const notificationSender = require('./notifications/notificationSender');
 log.info(`NODE_ENV: ${process.env.NODE_ENV}`);
 log.info(`LogLevel: ${log.getLevel()}`);
 
-const app = express();
 app.use((req, res, next) => {
   reqLogger(req);
   next();
@@ -55,28 +57,6 @@ const options = {
   onSignal,
 };
 
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ noServer: true, });
-
-wss.on('connection', (ws) => {
-  log.info('got new websocket connection');
-  ws.send('hellou you');
-  ws.on('message', data => {
-    log.info(`ws message: ${data}`);
-    ws.send('thank you');
-  });
-  ws.on('close', () => {
-    log.info('ws closed :(');
-  });
-});
-
-server.on('upgrade', function upgrade(request, socket, head) {
-  wss.handleUpgrade(request, socket, head, function done(ws) {
-    log.info('upgraded to what ever');
-    wss.emit('connection', ws, request);
-  });
-});
-
 try {
   createTerminus(server, options);
   server.listen(httpPort, () => {
@@ -87,3 +67,16 @@ try {
 } catch (error) {
   log.error(error);
 }
+
+global.io.on('connection', function (socket) {
+  log.info(`socket: new client ${socket.id}`);
+
+  socket.on('my_event', (arg1) => {
+    log.info(`socket: new message from client ${socket.id} -> ${arg1}`);
+    socket.emit('my_event', 'Hello world');
+  });
+
+  socket.on('disconnect', function () {
+    log.info('socket: connection closed');
+  });
+});
