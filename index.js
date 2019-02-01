@@ -68,15 +68,25 @@ try {
   log.error(error);
 }
 
-global.io.on('connection', function (socket) {
-  log.info(`socket: new client ${socket.id}`);
+global.io.on('connection', (client) => {
+  log.info(`socket: new client ${client.id}`);
 
-  socket.on('my_event', (arg1) => {
-    log.info(`socket: new message from client ${socket.id} -> ${arg1}`);
-    socket.emit('my_event', 'Hello world');
+  client.on('timer', (msg) => {
+    if (msg === 'start') {
+      setInterval(() => {
+        const date = new Date();
+        client.emit('timer', date);
+      }, 1000);
+    } else {
+      client.emit('timer', 'use the string start to start the timer');
+    }
   });
 
-  socket.on('disconnect', function () {
+  client.on('error', () => {
+    log.error(`socket: got error on client ${client.id}`);
+  });
+
+  client.on('disconnect', () => {
     log.info('socket: connection closed');
   });
 });
