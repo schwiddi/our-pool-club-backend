@@ -15,6 +15,7 @@ const db = require('./db/db_connection');
 const api = require('./api/index');
 const notificationGenerator = require('./notifications/notificationGenerator');
 const notificationSender = require('./notifications/notificationSender');
+require('./websocker/ws');
 
 log.info(`NODE_ENV: ${process.env.NODE_ENV}`);
 log.info(`LogLevel: ${log.getLevel()}`);
@@ -67,26 +68,3 @@ try {
 } catch (error) {
   log.error(error);
 }
-
-global.io.on('connection', (client) => {
-  log.info(`socket: new client ${client.id}`);
-
-  client.on('timer', (msg) => {
-    if (msg === 'start') {
-      setInterval(() => {
-        const date = new Date();
-        client.emit('timer', date);
-      }, 1000);
-    } else {
-      client.emit('timer', 'use the string start to start the timer');
-    }
-  });
-
-  client.on('error', () => {
-    log.error(`socket: got error on client ${client.id}`);
-  });
-
-  client.on('disconnect', () => {
-    log.info('socket: connection closed');
-  });
-});
