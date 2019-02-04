@@ -44,6 +44,8 @@ admin.get('/heapdump', (req, res) => {
     res.sendStatus(200);
     process.chdir('./dumps');
     heapdump.writeSnapshot();
+    // eslint-disable-next-line no-console
+    console.log('!!! heapdump was called ... exit now..');
     process.exit(0);
   } else {
     res.sendStatus(400);
