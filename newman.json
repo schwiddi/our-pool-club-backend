@@ -266,21 +266,21 @@
 					"script": {
 						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
 						"exec": [
-							"pm.test(\"Response time is less than 200ms\", function () {",
+							"pm.test(\"Response time\", function () {",
 							"    pm.expect(pm.response.responseTime).to.be.below(200);",
 							"});",
 							"",
-							"pm.test(\"Body includes string is required\", function () {",
+							"pm.test(\"Body includes\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"ValidationError\");",
 							"});",
 							"",
-							"pm.test(\"Body includes string is required\", function () {",
+							"pm.test(\"Body includes\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"is required\");",
 							"});",
 							"",
 							"",
-							"pm.test(\"Status code is 406\", function () {",
-							"    pm.response.to.have.status(406);",
+							"pm.test(\"Status code\", function () {",
+							"    pm.response.to.have.status(400);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -404,6 +404,60 @@
 					]
 				},
 				"description": "Should return all listed clubs"
+			},
+			"response": []
+		},
+		{
+			"name": "API V1 do a bad login 1 (joi validate promise check)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bbec5991-85ff-4c9b-87cd-077530303a04",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Body includes string is required\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Bad\");",
+							"});",
+							"",
+							"pm.test(\"Status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"mail\": \"testuser6891111@test.com\"\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5080/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5080",
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
 			},
 			"response": []
 		},
@@ -686,12 +740,12 @@
 					"script": {
 						"id": "0e7c547d-fa3c-4f33-82bb-beeb77060e60",
 						"exec": [
-							"pm.test(\"Response time is less than 200ms\", function () {",
+							"pm.test(\"Response time\", function () {",
 							"    pm.expect(pm.response.responseTime).to.be.below(200);",
 							"});",
 							"",
-							"pm.test(\"Status code is 406\", function () {",
-							"    pm.response.to.have.status(406);",
+							"pm.test(\"Status code\", function () {",
+							"    pm.response.to.have.status(400);",
 							"});"
 						],
 						"type": "text/javascript"
