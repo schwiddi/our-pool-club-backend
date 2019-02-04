@@ -6,10 +6,6 @@ const log = require('../common/logger');
 const { new_club, } = require('../schemas/joiInVal');
 const clubs = express.Router();
 
-function validateNewClub(data) {
-  return Joi.validate(data, new_club);
-}
-
 clubs.get('/', (req, res) => {
   db.query('SELECT * FROM t_clubs;')
     .then(rows => {
