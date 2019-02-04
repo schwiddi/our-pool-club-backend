@@ -5,12 +5,12 @@ const opts = {
   timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS',
 };
 
-const logger = snl.createSimpleLogger(opts);
+const log = snl.createSimpleLogger(opts);
 
 if (process.env.NODE_ENV === 'dev') {
-  logger.setLevel('debug');
+  log.setLevel('debug');
 } else {
-  logger.setLevel('info');
+  log.setLevel('info');
 }
 
-module.exports = logger;
+module.exports = log;
