@@ -32,6 +32,7 @@
     "test": "npm run testall",
     "testall": "npm run eslint && npm run jest && npm run coverage && npm run newman",
     "newman": "newman run newman.json",
+    "newman:stress": "newman run newman.json --iteration-count 100",
     "eslint": "eslint ./",
     "jest": "jest",
     "coverage": "jest --coverage"
