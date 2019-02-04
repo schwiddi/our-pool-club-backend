@@ -15,10 +15,10 @@ const db = require('./db/db_connection');
 const api = require('./api/index');
 const notificationGenerator = require('./notifications/notificationGenerator');
 const notificationSender = require('./notifications/notificationSender');
-require('./websocker/ws');
+require('./websocket/ws');
 
 log.info(`NODE_ENV: ${process.env.NODE_ENV}`);
-log.info(`LogLevel: ${log.getLevel()}`);
+log.info(`Log Level: ${log.getLevel()}`);
 
 app.use((req, res, next) => {
   reqLogger(req);
