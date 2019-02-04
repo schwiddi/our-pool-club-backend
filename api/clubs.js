@@ -41,26 +41,28 @@ clubs.get('/:c_id', (req, res) => {
 });
 
 clubs.post('/', (req, res) => {
-  const tmp = validateNewClub(req.body);
-  if (tmp.error) {
-    res.status(406).send(`${tmp.error.name}: ${tmp.error.details[0].message}`);
-  } else {
-    db.query(`INSERT INTO t_clubs (c_name, c_description, c_initiator) VALUES('${req.body.c_name}', '${req.body.c_description}', '${req.body.c_iniator}');`)
-      .then(rows => {
-        return db.query(`SELECT c_id, c_name, c_description, c_initiator, c_ts_insert FROM t_clubs WHERE c_id = ${rows[0].insertId}`);
-      })
-      .then(rows => {
-        if (isEmpty(rows[0])) {
+  Joi.validate(req.body, new_club)
+    .then(() => {
+      db.query(`INSERT INTO t_clubs (c_name, c_description, c_initiator) VALUES('${req.body.c_name}', '${req.body.c_description}', '${req.body.c_iniator}');`)
+        .then(rows => {
+          return db.query(`SELECT c_id, c_name, c_description, c_initiator, c_ts_insert FROM t_clubs WHERE c_id = ${rows[0].insertId}`);
+        })
+        .then(rows => {
+          if (isEmpty(rows[0])) {
+            res.sendStatus(500);
+          } else {
+            res.status(201).send(rows[0][0]);
+          }
+        })
+        .catch(err => {
           res.sendStatus(500);
-        } else {
-          res.status(201).send(rows[0][0]);
-        }
-      })
-      .catch(err => {
-        res.sendStatus(500);
-        log.error(err.message);
-      });
-  }
+          log.error(err.message);
+        });
+    })
+    .catch(err => {
+      res.status(400).send(`${err.name}: ${err.details[0].message} `);
+      log.warn(`Joi: ${err.message}`);
+    });
 });
 
 module.exports = clubs;
