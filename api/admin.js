@@ -2,6 +2,7 @@ const express = require('express');
 const log = require('../common/logger');
 const db = require('../db/db_connection');
 const admin = express.Router();
+const heapdump = require('heapdump');
 
 admin.get('/clearall', (req, res) => {
   if (process.env.NODE_ENV === 'dev') {
@@ -35,6 +36,23 @@ admin.get('/clearall', (req, res) => {
   } else {
     res.sendStatus(400);
     log.warn('DB truncate only on dev allowed!!!');
+  }
+});
+
+admin.get('/heapdump', (req, res) => {
+  if (process.env.NODE_ENV === 'dev') {
+    heapdump.writeSnapshot()
+      .then(res => {
+        res.sendStatus(200);
+        log.info('Heapdump: was written');
+      })
+      .catch(err => {
+        res.sendStatus(500);
+        log.error(`Heapdump: ${err.message}`);
+      });
+  } else {
+    res.sendStatus(400);
+    log.warn('Heapdump endpoint is only on dev allowed to use..');
   }
 });
 
