@@ -2,7 +2,7 @@ const express = require('express');
 const log = require('../common/logger');
 const db = require('../db/db_connection');
 const admin = express.Router();
-const heapdump = require('heapdump');
+// const heapdump = require('heapdump');
 
 admin.get('/clearall', (req, res) => {
   if (process.env.NODE_ENV === 'dev') {
@@ -39,18 +39,18 @@ admin.get('/clearall', (req, res) => {
   }
 });
 
-admin.get('/heapdump', (req, res) => {
-  if (process.env.NODE_ENV === 'dev') {
-    res.sendStatus(200);
-    process.chdir('./dumps');
-    heapdump.writeSnapshot();
-    // eslint-disable-next-line no-console
-    console.log('!!! heapdump was called ... exit now..');
-    process.exit(0);
-  } else {
-    res.sendStatus(400);
-    log.warn('Heapdump endpoint is only on dev allowed to use..');
-  }
-});
+// admin.get('/heapdump', (req, res) => {
+//   if (process.env.NODE_ENV === 'dev') {
+//     res.sendStatus(200);
+//     process.chdir('./dumps');
+//     heapdump.writeSnapshot();
+//     // eslint-disable-next-line no-console
+//     console.log('!!! heapdump was called ... exit now..');
+//     process.exit(0);
+//   } else {
+//     res.sendStatus(400);
+//     log.warn('Heapdump endpoint is only on dev allowed to use..');
+//   }
+// });
 
 module.exports = admin;
