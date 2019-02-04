@@ -41,15 +41,10 @@ admin.get('/clearall', (req, res) => {
 
 admin.get('/heapdump', (req, res) => {
   if (process.env.NODE_ENV === 'dev') {
-    heapdump.writeSnapshot()
-      .then(res => {
-        res.sendStatus(200);
-        log.info('Heapdump: was written');
-      })
-      .catch(err => {
-        res.sendStatus(500);
-        log.error(`Heapdump: ${err.message}`);
-      });
+    res.sendStatus(200);
+    process.chdir('./dumps');
+    heapdump.writeSnapshot();
+    process.exit(0);
   } else {
     res.sendStatus(400);
     log.warn('Heapdump endpoint is only on dev allowed to use..');

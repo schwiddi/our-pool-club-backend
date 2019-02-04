@@ -1,0 +1,10 @@
+{
+  "verbose": false,
+  "ignore": [
+    "*.sql",
+    "sql/*",
+    "*.log",
+    "log/*",
+    "debug*"
+  ]
+}
