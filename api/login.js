@@ -57,7 +57,7 @@ login.post('/', (req, res) => {
     })
     .catch(err => {
       res.sendStatus(400);
-      log.warn(`login validation had a problem!!! ${err.message}`);
+      log.warn(`Joi: ${err.message}`);
     });
 });
 
