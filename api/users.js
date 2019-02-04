@@ -46,18 +46,14 @@ users.post('/', (req, res) => {
         .then(hashedpw => {
           db.query(`INSERT INTO t_users (u_name, u_mail, u_password, u_registration_key) VALUES('${req.body.u_name}', '${req.body.u_mail}', '${hashedpw}', '${registerKey}');`)
             .then(rows => {
-              db.query(`SELECT u_id, u_name, u_mail, u_ts_insert FROM t_users WHERE u_id = ${rows[0].insertId}`)
-                .then(rows => {
-                  if (isEmpty(rows[0])) {
-                    res.sendStatus(500);
-                  } else {
-                    res.status(201).send(rows[0][0]);
-                  }
-                })
-                .catch(err => {
-                  res.sendStatus(500);
-                  log.error(`db: ${err.message}`);
-                });
+              return db.query(`SELECT u_id, u_name, u_mail, u_ts_insert FROM t_users WHERE u_id = ${rows[0].insertId}`);
+            })
+            .then(rows => {
+              if (isEmpty(rows[0])) {
+                res.sendStatus(500);
+              } else {
+                res.status(201).send(rows[0][0]);
+              }
             })
             .catch(err => {
               res.sendStatus(500);
