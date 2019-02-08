@@ -14,13 +14,7 @@ admin.get('/clearall', (req, res) => {
         return db.query('TRUNCATE t_notification_messages;');
       })
       .then(() => {
-        return db.query('TRUNCATE t_rel_club_tables;');
-      })
-      .then(() => {
         return db.query('TRUNCATE t_rel_user_clubs;');
-      })
-      .then(() => {
-        return db.query('TRUNCATE t_tables;');
       })
       .then(() => {
         return db.query('TRUNCATE t_users;');
