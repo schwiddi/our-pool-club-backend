@@ -19,6 +19,6 @@ global.io.on('connection', (client) => {
   });
 
   client.on('disconnect', () => {
-    log.info('socket: connection closed');
+    log.info(`socket: connection closed for client ${client.id}`);
   });
 });
