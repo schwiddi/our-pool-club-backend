@@ -1,3 +1,0 @@
-* configure react-hot-loader
-
-

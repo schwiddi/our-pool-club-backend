@@ -1,7 +1,0 @@
-{
-    "websocket": true,
-    "origins": [
-        "*:*"
-    ],
-    "cookie_needed": false
-}
