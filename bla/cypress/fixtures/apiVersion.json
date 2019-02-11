@@ -1,0 +1,15 @@
+{
+    "git": {
+        "hash": "9999999",
+        "date": "1977-05-25T15:00:00-07:00",
+        "dirty": true
+    },
+    "build": {
+        "date": "1977-05-25T15:00:00-07:00",
+        "go": {
+            "version": "1.9",
+            "arch": "linux/amd64"
+        },
+        "user": "Nobody \u003cnobody@example.com\u003e"
+    }
+}
