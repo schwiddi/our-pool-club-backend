@@ -446,7 +446,7 @@
 					"raw": "{\n\t\"mail\": \"testuser6891111@test.com\"\n\t\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5080/api/v1/login",
+					"raw": "http://localhost:5080/api/v1/auth",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -455,7 +455,7 @@
 					"path": [
 						"api",
 						"v1",
-						"login"
+						"auth"
 					]
 				}
 			},
@@ -500,7 +500,7 @@
 					"raw": "{\n\t\"mail\": \"testuser6891111@test.com\",\n\t\"password\": \"qwertz123\"\n\t\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5080/api/v1/login",
+					"raw": "http://localhost:5080/api/v1/auth",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -509,7 +509,7 @@
 					"path": [
 						"api",
 						"v1",
-						"login"
+						"auth"
 					]
 				}
 			},
@@ -554,7 +554,7 @@
 					"raw": "{\n\t\"mail\": \"r21billard@gmail.com\",\n\t\"password\": \"falschesPw\"\n\t\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5080/api/v1/login",
+					"raw": "http://localhost:5080/api/v1/auth",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -563,7 +563,7 @@
 					"path": [
 						"api",
 						"v1",
-						"login"
+						"auth"
 					]
 				}
 			},
@@ -617,7 +617,7 @@
 					"raw": "{\n\t\"mail\": \"schwiddi@me.com\",\n\t\"password\": \"qwertz123\"\n\t\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5080/api/v1/login",
+					"raw": "http://localhost:5080/api/v1/auth",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -626,7 +626,7 @@
 					"path": [
 						"api",
 						"v1",
-						"login"
+						"auth"
 					]
 				}
 			},
