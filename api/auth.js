@@ -5,17 +5,17 @@ const isEmpty = require('lodash/isEmpty');
 const bcrypt = require('bcrypt');
 const db = require('../db/db_connection');
 const log = require('../common/logger');
-const { new_login, } = require('../schemas/joiInVal');
-const login = express.Router();
+const { new_auth, } = require('../schemas/joiInVal');
+const auth = express.Router();
 
-login.post('/', (req, res) => {
-  Joi.validate(req.body, new_login)
+auth.post('/', (req, res) => {
+  Joi.validate(req.body, new_auth)
     .then(() => {
       db.query(`SELECT * FROM t_users WHERE u_mail = '${req.body.mail}';`)
         .then(rows => {
           if (isEmpty(rows[0])) {
             res.sendStatus(400);
-            log.warn(`login with unknown mail! ${req.body.mail}`);
+            log.warn(`auth with unknown mail! ${req.body.mail}`);
           } else {
             bcrypt.compare(req.body.password, rows[0][0].u_password)
               .then(compRes => {
@@ -41,7 +41,7 @@ login.post('/', (req, res) => {
                   log.info(`user ${req.body.mail} successfull auth and new token generated ${jwtToken}`);
                 } else {
                   res.sendStatus(400);
-                  log.warn(`login with wrong password!! ${req.body.mail} and pw: ${req.body.password}`);
+                  log.warn(`auth with wrong password!! ${req.body.mail} and pw: ${req.body.password}`);
                 }
               })
               .catch(err => {
@@ -61,4 +61,4 @@ login.post('/', (req, res) => {
     });
 });
 
-module.exports = login;
+module.exports = auth;

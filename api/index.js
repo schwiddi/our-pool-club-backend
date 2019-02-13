@@ -1,7 +1,7 @@
 const express = require('express');
 const clubs = require('./clubs');
 const users = require('./users');
-const login = require('./login');
+const auth = require('./auth');
 const admin = require('./admin');
 const api = express.Router();
 
@@ -11,7 +11,7 @@ const defaultRes = {
 
 api.use('/clubs/', clubs);
 api.use('/users/', users);
-api.use('/login/', login);
+api.use('/auth/', auth);
 api.use('/admin/', admin);
 
 api.get('/', (req, res) => {

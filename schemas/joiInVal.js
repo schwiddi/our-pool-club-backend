@@ -36,7 +36,7 @@ const schemas = {
     t_c_id: Joi.number()
       .required(),
   },
-  new_login: {
+  new_auth: {
     mail: Joi.string()
       .email({ minDomainAtoms: 2, })
       .min(3)
@@ -53,5 +53,5 @@ module.exports = {
   new_user: schemas.new_user,
   new_club: schemas.new_club,
   new_table: schemas.new_table,
-  new_login: schemas.new_login,
+  new_auth: schemas.new_auth,
 };
