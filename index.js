@@ -20,6 +20,8 @@ require('./websocket/ws');
 log.info(`NODE_ENV: ${process.env.NODE_ENV}`);
 log.info(`Log Level: ${log.getLevel()}`);
 
+
+
 app.use((req, res, next) => {
   reqLogger(req);
   next();
